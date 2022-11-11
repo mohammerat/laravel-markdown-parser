@@ -1,0 +1,14 @@
+{
+    "name": "mohammerat/press",
+    "description": "My very first Laravel package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mohammad Saadat",
+            "email": "mohammerat@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "orchestra/testbench": "^6.25"
+    }
+}
