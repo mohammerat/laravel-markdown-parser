@@ -1,14 +1,27 @@
 {
-    "name": "mohammerat/press",
-    "description": "My very first Laravel package",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Mohammad Saadat",
-            "email": "mohammerat@gmail.com"
-        }
-    ],
-    "require-dev": {
-        "orchestra/testbench": "^6.25"
+  "name": "mohammerat/press",
+  "description": "My very first Laravel package",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Mohammad Saadat",
+      "email": "mohammerat@gmail.com"
     }
+  ],
+  "require-dev": {
+    "orchestra/testbench": "^6.25"
+  },
+  "autoload": {
+    "psr-4": {
+      "Mohammerat\\Press\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Mohammerat\\Press\\Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "erusev/parsedown": "^1.7"
+  }
 }
