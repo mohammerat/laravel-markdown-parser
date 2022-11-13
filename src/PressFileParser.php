@@ -2,13 +2,14 @@
 
 namespace Mohammerat\Press;
 
-use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 
 class PressFileParser
 {
   protected $filename;
+
+  protected $rawData;
 
   protected $data;
 
@@ -28,24 +29,29 @@ class PressFileParser
     return $this->data;
   }
 
+  public function getRawData()
+  {
+    return $this->rawData;
+  }
+
   protected function splitFile()
   {
     preg_match(
       '/^\-{3}(.*?)\-{3}(.*)/s',
       File::exists($this->filename) ? File::get($this->filename) : $this->filename,
-      $this->data
+      $this->rawData
     );
   }
 
   protected function explodeData()
   {
-    foreach (explode("\n", trim($this->data[1])) as $fieldString) {
+    foreach (explode("\n", trim($this->rawData[1])) as $fieldString) {
       preg_match('/(.*):\s?(.*)/', $fieldString, $fieldArray);
 
       $this->data[$fieldArray[1]] = $fieldArray[2];
     }
 
-    $this->data['body'] = trim($this->data[2]);
+    $this->data['body'] = trim($this->rawData[2]);
   }
 
   protected function processFields()
@@ -54,9 +60,11 @@ class PressFileParser
 
       $class = 'Mohammerat\\Press\\Fields\\' . Str::title($field);
 
-      if (class_exists($class) && method_exists($class, 'process')) {
-        $this->data = array_merge($this->data, $class::process($field, $value));
+      if (!class_exists($class) && !method_exists($class, 'process')) {
+        $class = 'Mohammerat\\Press\\Fields\\Extra';
       }
+
+      $this->data = array_merge($this->data, $class::process($field, $value, $this->data));
     }
   }
 }
