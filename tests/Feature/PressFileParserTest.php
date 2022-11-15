@@ -4,7 +4,6 @@ namespace Mohammerat\Press\Tests;
 
 use Carbon\Carbon;
 use Mohammerat\Press\PressFileParser;
-use Orchestra\Testbench\TestCase;
 
 class PressFileParserTest extends TestCase
 {
